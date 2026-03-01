@@ -1,27 +1,36 @@
-name: Daily DevSync Commit
+name: DevSync Daily Update
+
 on:
+  # 1. The Alarm Clock: Run every day at 10:30 AM UTC
   schedule:
-    - cron: '30 12 * * *'
+    - cron: '30 10 * * *'
+  
+  # 2. The Manual Override: Lets you test it right now without waiting 24 hours!
   workflow_dispatch:
 
 jobs:
-  daily-commit:
+  daily-commit-job:
     runs-on: ubuntu-latest
+    
+    # 3. Security Badge: Give the robot permission to modify your code
     permissions:
-      contents: write 
-      
+      contents: write
+
     steps:
-      - name: Checkout repository
+      # Step A: Tell the robot to download your current code
+      - name: Checkout the repository
         uses: actions/checkout@v4
 
-      - name: Track daily activity for 23f3003225@ds.study.iitm.ac.in
+      # Step B: Make a tiny change so there is something to commit
+      - name: Update the daily log file
         run: |
-          echo "Daily automated activity logged at $(date)" >> activity_log.txt
+          echo "Automated update ran on $(date)" >> activity_log.txt
 
-      - name: Commit and push changes
+      # Step C: The assignment requirement! Commit the code with your email in the step name.
+      - name: Commit changes for 23f1001127@ds.study.iitm.ac.in
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add activity_log.txt
-          git commit -m "Automated daily activity log update" || echo "No changes to commit"
+          git commit -m "Automated daily activity update"
           git push
