@@ -1,0 +1,11 @@
+name: Status Badge Test
+
+on:
+  workflow_dispatch: # The manual play button!
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print a success message
+        run: echo "The workflow works! Give me a green badge."
